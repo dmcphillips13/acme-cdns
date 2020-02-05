@@ -1,17 +1,9 @@
-const productsHeader = document.querySelector('#products thead');
-
-const productsBody = document.querySelector('#products tbody');
-
-const companiesHeader = document.querySelector('#companies thead');
-
-const companiesBody = document.querySelector('#companies tbody');
-
-
 const productsTable = document.querySelector('#products');
 const companiesTable = document.querySelector('#companies');
+const productsTab = document.querySelector('.nav-link[href="#products"]');
+const companiesTab = document.querySelector('.nav-link[href="#companies"]');
 
 const pProducts = axios.get('https://acme-users-api-rev.herokuapp.com/api/products');
-
 const pCompanies = axios.get('https://acme-users-api-rev.herokuapp.com/api/companies');
 
 const pAll = Promise.all([pProducts, pCompanies])
@@ -47,7 +39,6 @@ const render = (data, table) => {
     htmlHeader += '</tr></thead>';
     htmlBody += '</tbody>';
 
-    //header.innerHTML =  htmlHeader;
     table.innerHTML =  htmlHeader + htmlBody;
 }
 
@@ -58,15 +49,18 @@ const toggleTables = () => {
         console.log('products');
         productsTable.classList.remove('d-none');
         companiesTable.classList.add('d-none');
+        productsTab.classList.add('active');
+        companiesTab.classList.remove('active');
     } else {
         console.log('companies');
         productsTable.classList.add('d-none');
         companiesTable.classList.remove('d-none');
+        companiesTab.classList.add('active');
+        productsTab.classList.remove('active');
     }
 
     const link = document.querySelector('.nav-link');
 }
-
 
 window.addEventListener('hashchange', () => {
     toggleTables();
